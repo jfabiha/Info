@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABIHA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000000;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .neon-text {
+            font-family: "Fleur De Leah", cursive;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 10rem;
+            color: #ffffff;
+            text-shadow: 
+                0 0 7px #ff0000,
+                0 0 10px #ff0000,
+                0 0 21px #ff0000,
+                0 0 42px #ff1919,
+                0 0 82px #ff3232,
+                0 0 92px #ff4d4d,
+                0 0 102px #ff6666,
+                0 0 151px #ff8080;
+            animation: pulsate 1s infinite alternate, float 3s ease-in-out infinite;
+            letter-spacing: 5px;
+        }
+        
+        @keyframes pulsate {
+            0% {
+                text-shadow: 
+                    0 0 7px #ff0000,
+                    0 0 10px #ff0000,
+                    0 0 21px #ff0000,
+                    0 0 42px #ff1919,
+                    0 0 82px #ff3232,
+                    0 0 92px #ff4d4d,
+                    0 0 102px #ff6666,
+                    0 0 151px #ff8080;
+            }
+            
+            100% {
+                text-shadow: 
+                    0 0 10px #ff0000,
+                    0 0 20px #ff0000,
+                    0 0 30px #ff0000,
+                    0 0 50px #ff1919,
+                    0 0 90px #ff3232,
+                    0 0 100px #ff4d4d,
+                    0 0 150px #ff6666,
+                    0 0 200px #ff8080;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: #ff3333;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: rise 1.5s linear infinite;
+        }
+        
+        @keyframes rise {
+            0% {
+                transform: translateY(100px) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(calc(var(--x-move) * 50px));
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .neon-text {
+                font-size: 6rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .neon-text {
+                font-size: 4rem;
+                letter-spacing: 3px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .neon-text {
+                font-size: 3rem;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="neon-text">ABIHA</div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <script>
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        const numberOfParticles = 30;
+        
+        function createParticles() {
+            particlesContainer.innerHTML = '';
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position based on current window dimensions
+                const posX = Math.random() * window.innerWidth;
+                const delay = Math.random() * 1.5; // Reduced delay for faster animation
+                const size = Math.random() * 4 + 2; // Random size
+                const xMove = Math.random() * 2 - 1; // Random horizontal movement
+                
+                particle.style.left = `${posX}px`;
+                particle.style.bottom = '0';
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.setProperty('--x-move', xMove);
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initial creation
+        createParticles();
+        
+        // Recreate particles on window resize for better responsiveness
+        window.addEventListener('resize', createParticles);
+    </script>
+</body>
+</html>
